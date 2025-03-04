@@ -1,0 +1,11 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/master
+  jpa:
+    hibernate:
+      ddl-auto: update
+services:
+  user-service-url: http://localhost:8080/api/user
