@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/users
+    username: postgres
+    password: postgres
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/master
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org.springframework.security: DEBUG
+keycloak:
+  client:
+    url: http://localhost:9090
+    realm: master
+    username: admin
+    password: admin
+    client-id: admin-cli
+    grant-type: password
