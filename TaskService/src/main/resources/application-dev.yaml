@@ -1,0 +1,18 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tasks
+    username: postgres
+    password: postgres
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/master
+  jpa:
+    hibernate:
+      ddl-auto: update
+logging:
+  level:
+    org.springframework.security: DEBUG
