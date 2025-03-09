@@ -1,6 +1,8 @@
 server:
   port: 8082
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:postgresql://localhost:5432/tasks
     username: postgres
@@ -10,9 +12,17 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9090/realms/master
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
   jpa:
     hibernate:
       ddl-auto: update
 logging:
   level:
     org.springframework.security: DEBUG
+services:
+  user-service-url: http://localhost:8080/api/user
+  project-service-url: http://localhost:8081/api/project

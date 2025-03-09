@@ -10,18 +10,24 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.diploma.taskservice.entity.enums.Priority;
 import org.diploma.taskservice.entity.enums.Status;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "tasks")
+@Getter
+@Setter
 public class Task {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -38,9 +44,27 @@ public class Task {
     private Instant createdAt;
     private Priority priority;
     private Status status;
-    @OneToMany(mappedBy = "task", cascade = ALL, orphanRemoval = true)
-    private List<Task> tasks;
+    @OneToMany(mappedBy = "majorTask", cascade = ALL, orphanRemoval = true)
+    private List<Task> subtasks;
     @ManyToOne
     @JoinColumn(name = "major_task_id")
-    private Task task;
+    private Task majorTask;
+    private Instant completedAt;
+    private Instant startedAt;
+    @OneToMany(mappedBy = "task", cascade = ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof Task task)) return false;
+        return Objects.equals(id, task.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
 }
