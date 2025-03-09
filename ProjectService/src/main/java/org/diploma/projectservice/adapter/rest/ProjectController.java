@@ -72,16 +72,4 @@ public class ProjectController {
         projectService.deleteUsersFromProject(projectUserMapper.toEntityList(users), id);
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/tasks/{id}/{taskId}")
-    public ResponseEntity<Void> addTaskToProject(@PathVariable Long id, @PathVariable Long taskId) {
-        projectService.addTaskToProject(id, taskId);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/tasks/{id}/{taskId}")
-    public ResponseEntity<Void> deleteTaskFromProject(@PathVariable Long id, @PathVariable Long taskId) {
-        projectService.deleteTaskFromProject(id, taskId);
-        return ResponseEntity.noContent().build();
-    }
 }

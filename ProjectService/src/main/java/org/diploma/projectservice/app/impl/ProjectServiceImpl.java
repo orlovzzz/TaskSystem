@@ -42,6 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
             project.setUsers(new ArrayList<>());
         }
         project.getUsers().add(owner);
+        project.getUsers().forEach(u -> u.setProject(project));
         projectRepository.save(project);
     }
 
@@ -88,20 +89,6 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.save(project);
     }
 
-    @Override
-    public void addTaskToProject(Long taskId, Long id) {
-        var project = getProject(id);
-        project.getTasks().add(taskId);
-        projectRepository.save(project);
-    }
-
-    @Override
-    public void deleteTaskFromProject(Long taskId, Long id) {
-        var project = getProject(id);
-        project.getTasks().remove(taskId);
-        projectRepository.save(project);
-    }
-
     private void changeProjectData(Project oldData, Project newData) {
         oldData.setName(newData.getName());
         oldData.setDescription(newData.getDescription());
@@ -112,7 +99,5 @@ public class ProjectServiceImpl implements ProjectService {
                 oldData.getUsers().add(u);
             }
         });
-
-        oldData.setTasks(newData.getTasks());
     }
 }

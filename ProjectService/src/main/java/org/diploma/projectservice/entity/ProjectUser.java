@@ -43,6 +43,6 @@ public class ProjectUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, project.getId());
+        return project == null ? Objects.hash(login) : Objects.hash(login, project.getId());
     }
 }

@@ -100,7 +100,6 @@ class ProjectControllerTest {
         var project = projectRepository.findById(1000002L).get();
         assertEquals("test1", project.getName());
         assertEquals("test1", project.getDescription());
-        assertEquals(3, project.getTasks().size());
         assertEquals(2, project.getUsers().size());
     }
 

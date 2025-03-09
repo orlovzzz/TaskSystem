@@ -15,6 +15,9 @@ public class UserAdapter implements UserService {
     private final UserServiceRequester userServiceRequester;
 
     public List<ProjectUserDto> getUsers(List<ProjectUserDto> users) {
+        if (users == null) {
+            return List.of();
+        }
         log.info("Getting full users data {}", users);
         return users.stream()
                 .map(this::getUser)

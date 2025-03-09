@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 public class SecurityAdapter implements SecurityService {
     @Override
     public AuthorizedUser getAuthorizedUser() {
-        var principal = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            throw new SecurityException("Authentication required");
+        }
+        var principal = (Jwt) auth.getPrincipal();
         return AuthorizedUser.builder()
-                .login(principal.getClaimAsString("login"))
-                .build();
+            .login(principal.getClaimAsString("login"))
+            .build();
     }
 }

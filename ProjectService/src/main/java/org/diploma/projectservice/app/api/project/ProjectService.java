@@ -13,6 +13,4 @@ public interface ProjectService {
     void deleteProject(Long id);
     void addUsersToProject(List<ProjectUser> users, Long id);
     void deleteUsersFromProject(List<ProjectUser> users, Long id);
-    void addTaskToProject(Long id, Long taskId);
-    void deleteTaskFromProject(Long id, Long taskId);
 }
