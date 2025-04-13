@@ -1,6 +1,7 @@
 package org.diploma.userservice.adapter.rest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.diploma.userservice.adapter.rest.dto.CreateUserDto;
 import org.diploma.userservice.adapter.rest.dto.UserDto;
 import org.diploma.userservice.adapter.rest.mapper.UserMapper;
@@ -18,23 +19,27 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        return ResponseEntity.ok(userMapper.toUserDtoList(userService.getAllUsers()));
+        var users = userService.getAllUsers();
+        log.info("Get all users: {}", users);
+        return ResponseEntity.ok(userMapper.toUserDtoList(users));
     }
 
-    @GetMapping("/{login}")
+    @GetMapping(value = "/{login}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> getUserByLogin(@PathVariable String login) {
         var user = userMapper.toUserDto(userService.getUserById(login));
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok().body(user);
     }
 
     @PostMapping

@@ -12,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.diploma.taskservice.entity.enums.Priority;
 import org.diploma.taskservice.entity.enums.Status;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,6 +29,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Table(name = "tasks")
 @Getter
 @Setter
+@ToString
 public class Task {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -45,6 +47,7 @@ public class Task {
     private Priority priority;
     private Status status;
     @OneToMany(mappedBy = "majorTask", cascade = ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Task> subtasks;
     @ManyToOne
     @JoinColumn(name = "major_task_id")
@@ -52,6 +55,7 @@ public class Task {
     private Instant completedAt;
     private Instant startedAt;
     @OneToMany(mappedBy = "task", cascade = ALL, orphanRemoval = true)
+    @ToString.Exclude
     private List<Comment> comments = new ArrayList<>();
 
     @Override

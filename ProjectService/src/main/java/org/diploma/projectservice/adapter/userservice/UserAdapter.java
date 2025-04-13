@@ -1,5 +1,6 @@
 package org.diploma.projectservice.adapter.userservice;
 
+import feign.codec.DecodeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.diploma.projectservice.adapter.rest.dto.ProjectUserDto;
@@ -30,6 +31,9 @@ public class UserAdapter implements UserService {
             user.setFirstName(u.getFirstName());
             user.setLastName(u.getLastName());
             return user;
+        }
+        catch (DecodeException e) {
+            log.error(e.getMessage());
         }
         catch (Exception e) {
             log.error("An error occurred while getting user", e);

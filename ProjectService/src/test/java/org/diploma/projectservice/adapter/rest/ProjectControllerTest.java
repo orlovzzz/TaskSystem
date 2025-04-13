@@ -88,7 +88,6 @@ class ProjectControllerTest {
         var projectDto = ProjectDto.builder()
                 .name("test1")
                 .description("test1")
-                .tasks(List.of(1L, 2L, 3L))
                 .users(List.of(ProjectUserDto.builder().login("test1").permission(USER).build()))
                 .build();
         mockMvc.perform(put("/api/project/1000002")

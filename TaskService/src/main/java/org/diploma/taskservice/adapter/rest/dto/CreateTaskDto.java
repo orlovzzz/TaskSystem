@@ -12,7 +12,6 @@ public class CreateTaskDto {
     private Long projectId;
     private String name;
     private String description;
-    private String owner;
     private List<String> assignee;
     private Priority priority;
     private Task majorTask;

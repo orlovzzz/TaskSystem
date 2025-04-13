@@ -25,7 +25,7 @@ public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam("projectId") Long projectId) {
         return ResponseEntity.ok(taskMapper.toDtoList(taskService.getAllTasks(projectId)));
     }

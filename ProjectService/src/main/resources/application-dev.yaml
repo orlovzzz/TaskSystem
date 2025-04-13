@@ -13,10 +13,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+
+services:
+  user-service-url: http://localhost:8080/api/user
+
 logging:
   level:
     org.springframework.security: DEBUG
-    org.springframework.transaction: DEBUG
-    org.springframework.transaction.interceptor: TRACE
-services:
-  user-service-url: http://localhost:8080/api/user

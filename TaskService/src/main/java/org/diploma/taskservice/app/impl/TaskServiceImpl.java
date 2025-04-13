@@ -1,6 +1,7 @@
 package org.diploma.taskservice.app.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.diploma.taskservice.adapter.repository.TaskRepository;
 import org.diploma.taskservice.app.api.SecurityService;
 import org.diploma.taskservice.app.api.TaskService;
@@ -20,23 +21,28 @@ import static org.diploma.taskservice.entity.enums.Status.OPEN;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final SecurityService securityService;
 
     @Override
     public List<Task> getAllTasks(Long projectId) {
+        log.info("Get all tasks, project {}", projectId);
         return taskRepository.findTasksByProjectId(projectId);
     }
 
     @Override
     public Task getTask(Long id) {
-        return taskRepository.findById(id)
+        var task = taskRepository.findById(id)
             .orElseThrow(() -> new TaskNotFoundException("Task with id " + id + " not found"));
+        log.info("Get task with id {}, task {}", id, task);
+        return task;
     }
 
     @Override
     public void createTask(Task task) {
+        log.info("Create task {}", task);
         task.setStatus(OPEN);
         task.setOwner(securityService.getAuthorizedUser().getLogin());
         taskRepository.save(task);
@@ -44,6 +50,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void updateTask(Long id, Task task) {
+        log.info("Update task with id {}, task {}", id, task);
         var oldTask = getTask(id);
         updateTaskData(oldTask, task);
         taskRepository.save(oldTask);
@@ -51,6 +58,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(Long id) {
+        log.info("Delete task with id {}", id);
         getTask(id);
         taskRepository.deleteById(id);
     }

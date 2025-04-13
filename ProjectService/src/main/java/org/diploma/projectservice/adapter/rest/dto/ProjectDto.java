@@ -16,6 +16,5 @@ public class ProjectDto {
     private String name;
     private String description;
     private String owner;
-    private List<Long> tasks;
     private List<ProjectUserDto> users;
 }

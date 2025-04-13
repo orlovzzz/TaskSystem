@@ -2,6 +2,7 @@ package org.diploma.projectservice.app.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.diploma.projectservice.adapter.repository.ProjectRepository;
 import org.diploma.projectservice.app.api.exception.ProjectAlreadyExistsException;
 import org.diploma.projectservice.app.api.exception.ProjectNotFoundException;
@@ -20,12 +21,14 @@ import static org.diploma.projectservice.entity.enums.Permission.ADMIN;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final SecurityService securityService;
 
     @Override
     public void createProject(Project project) {
+        log.info("Create project {}", project);
         var existingProject = projectRepository.findProjectByName(project.getName());
         if (existingProject.isPresent()) {
             throw new ProjectAlreadyExistsException("Project with name " + project.getName() + " already exists");
@@ -68,6 +71,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(Long id) {
+        log.info("Delete project {}", id);
         var existingProject = projectRepository.findById(id)
                 .orElseThrow(() -> new ProjectNotFoundException("Project with id " + id + " not found"));
         projectRepository.delete(existingProject);
