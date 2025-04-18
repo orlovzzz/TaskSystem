@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class TaskDto {
+public class SubtaskDto {
     private Long id;
     private Long projectId;
     private String name;
@@ -19,9 +19,6 @@ public class TaskDto {
     private Instant createdAt;
     private Priority priority;
     private Status status;
-    private List<SubtaskDto> subtasks = new ArrayList<>();
-    private TaskDto majorTask;
     private Instant completedAt;
     private Instant startedAt;
 }
-

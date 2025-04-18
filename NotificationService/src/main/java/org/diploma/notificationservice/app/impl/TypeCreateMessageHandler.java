@@ -24,7 +24,7 @@ public class TypeCreateMessageHandler implements MessageHandler {
     public void handle(Message message) {
         var to = message.getAssigneeEmails();
         var subject = "Новая задача";
-        var body = "Новая задача " + message.getProjectName() + "-" + message.getTaskId() + "\n Создатель: " + message.getOwnerEmail();
+        var body = "Новая задача " + message.getProjectName() + "-" + message.getTaskId() + "\nАвтор задачи: " + message.getUpdater();
         emailSender.send(new Notification(to, subject, body));
     }
 }

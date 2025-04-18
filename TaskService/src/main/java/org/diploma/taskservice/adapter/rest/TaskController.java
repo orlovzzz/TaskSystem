@@ -15,38 +15,47 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/task")
 @RequiredArgsConstructor
+@Tag(name = "Task Controller", description = "Управление задачами в проектах")
 public class TaskController {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
 
+    @Operation(summary = "Получить все задачи проекта")
     @GetMapping
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam("projectId") Long projectId) {
         return ResponseEntity.ok(taskMapper.toDtoList(taskService.getAllTasks(projectId)));
     }
 
+    @Operation(summary = "Получить задачу по ID")
     @GetMapping("/{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id) {
         return ResponseEntity.ok(taskMapper.toDto(taskService.getTask(id)));
     }
 
+    @Operation(summary = "Создать новую задачу")
     @PostMapping
     public ResponseEntity<Void> createTask(@RequestBody CreateTaskDto dto) {
         taskService.createTask(taskMapper.toEntity(dto));
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Обновить задачу по ID")
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateTask(@PathVariable Long id, @RequestBody TaskDto dto) {
         taskService.updateTask(id, taskMapper.toEntity(dto));
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Удалить задачу по ID")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);

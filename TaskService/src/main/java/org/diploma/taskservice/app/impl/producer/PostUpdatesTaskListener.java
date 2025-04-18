@@ -1,4 +1,4 @@
-package org.diploma.taskservice.app.impl.listener;
+package org.diploma.taskservice.app.impl.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

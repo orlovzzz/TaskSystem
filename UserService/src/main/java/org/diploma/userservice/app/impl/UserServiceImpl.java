@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private User getUserOrThrow(String login) {
-        return userRepository.findById(login)
+        return userRepository.findUserByLoginIgnoreCase(login)
                 .orElseThrow(() -> new UserNotFoundException("User with login " + login + " not found"));
     }
 }
